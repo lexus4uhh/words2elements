@@ -52,3 +52,9 @@ couldn`t interpritate, symbol: 3
 
 - The script reads a single word from standard input; there is no additional argument parsing.
 - Output is intended for quick experimentation and fun with the periodic table, not for production use.
+
+## Feautures
+
+- Add GUI version.
+- Check unsuitable strings (for example, without spaces or special symbols).
+- Improve representing algorithm.
