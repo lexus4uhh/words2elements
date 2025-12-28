@@ -12,29 +12,27 @@ elements = [
     "md", "no", "lr", "rf", "db", "sg", "bh", "hs", "mt", "ds",
     "rg", "cn", "nh", "fl", "mc", "lv", "ts", "og"]
 
-def main(word):
+def main(word: str):
     word = word.lower()
-    result = []
-    i = 0
-    N = len(word)
-    if N == 0:
-        return 'no emty strings!'
-    while i < N:
-        if i + 1 < N and word[i:i+2] in elements:
-            result.append(word[i].upper() + word[i+1])
-            i += 2
-        elif word[i] in elements:
-            result.append(word[i].upper())
-            i += 1
-        else:
-            return f'couldn`t interpritate, symbol: {i + 1}'
-    
-    return result
+
+    def dfs(i):
+        if i == len(word):
+            return [[]]
+
+        results = []
+
+        for length in (1, 2):
+            part = word[i:i + length]
+            if part in elements:
+                symbol = part.capitalize()
+                for tail in dfs(i + length):
+                    results.append([symbol] + tail)
+
+        return results
+
+    return dfs(0)
 
 try:
-    elem_set = main(input())
+    print(main(input()))
 except Exception as e:
     print(f'error: {e}')
-    quit()
-
-print(elem_set)

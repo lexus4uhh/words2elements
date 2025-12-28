@@ -1,12 +1,18 @@
 # words2elements
 
-`words2elements` is a small Python script that tries to write a word using symbols of the chemical elements.
+`words2elements` is a small Python script that tries to spell a word using symbols of the chemical elements.
 
-Given an input word, it scans from left to right and splits it into one- or two-letter element symbols (e.g. `H`, `He`, `Na`, `Cl`). If the entire word can be represented using element symbols, it prints a list of those symbols; otherwise, it prints an error message explaining where it failed.
+Given an input word, it attempts to decompose it into one- or two-letter element symbols (for example, `H`, `He`, `Na`, `Cl`). It searches for all valid decompositions and prints them as Python lists.
 
 ## Requirements
 
 - Python 3.8+ (should also work with most modern Python 3 versions)
+
+## Installation
+
+1. Make sure Python 3 is installed and available on your `PATH`.
+2. Clone or download this repository.
+3. Open a terminal in the project root directory.
 
 ## Usage
 
@@ -21,7 +27,7 @@ Then type a word and press Enter. For example:
 ```text
 $ python main.py
 bacon
-['Ba', 'Co', 'N']
+[['Ba', 'Co', 'N']]
 ```
 
 Another example:
@@ -29,32 +35,34 @@ Another example:
 ```text
 $ python main.py
 neon
-['Ne', 'O', 'N']
+[['Ne', 'O', 'N']]
 ```
 
-If a word cannot be fully represented with element symbols, you will see a message like:
+If a word cannot be fully represented with element symbols, the script prints an empty list:
 
 ```text
-couldn`t interpritate, symbol: 3
+$ python main.py
+xyz
+[]
 ```
 
 ## How it works
 
 - All valid element symbols (1- and 2-letter, in lowercase) are stored in the `elements` list in `main.py`.
-- Input is converted to lowercase.
-- The script walks through the word:
-  - It first tries to match a 2-letter symbol at the current position.
-  - If that fails, it tries a 1-letter symbol.
-  - If neither works, it stops and reports the position of the failing character.
-- Successfully matched symbols are capitalized appropriately (first letter uppercase, second letter lowercase) and returned as a Python list.
+- The input word is converted to lowercase.
+- A depth-first search walks through the word:
+  - At each position it tries to match a 1- or 2-letter element symbol.
+  - For every match, it recurses on the remaining substring.
+  - This produces all possible decompositions of the word into element symbols.
+- Successfully matched symbols are capitalized appropriately (first letter uppercase, second letter lowercase) and returned as lists of symbols, which are then printed.
 
 ## Notes
 
 - The script reads a single word from standard input; there is no additional argument parsing.
 - Output is intended for quick experimentation and fun with the periodic table, not for production use.
 
-## Feautures
+## Planned improvements
 
-- Add GUI version.
-- Check unsuitable strings (for example, without spaces or special symbols).
-- Improve representing algorithm.
+- Add a simple GUI.
+- Better validation of unsuitable input strings (for example, strings with spaces or special characters).
+- Improve the decomposition algorithm (for example, preferring certain decompositions or limiting the number of results for very long words).
