@@ -31,8 +31,3 @@ def main(word: str):
         return results
 
     return dfs(0)
-
-try:
-    print(main(input()))
-except Exception as e:
-    print(f'error: {e}')

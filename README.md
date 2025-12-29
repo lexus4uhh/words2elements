@@ -1,68 +1,92 @@
 # words2elements
 
-`words2elements` is a small Python script that tries to spell a word using symbols of the chemical elements.
+## Description
 
-Given an input word, it attempts to decompose it into one- or two-letter element symbols (for example, `H`, `He`, `Na`, `Cl`). It searches for all valid decompositions and prints them as Python lists.
+words2elements transforms an input word into all possible sequences of chemical element symbols whose concatenation spells that word.
 
-## Requirements
+For example, the word `think` can be represented as `Th I N K` (thorium, iodine, nitrogen, potassium) or `Th In K` (thorium, indium, potassium) if such a decomposition exists using real periodic table symbols.
 
-- Python 3.8+ (should also work with most modern Python 3 versions)
+The project provides:
+- A small core solver (`tool.py`) that computes all valid decompositions.
+- A minimal command-line interface (`cli.py`).
+- A simple Tkinter-based GUI (`gui.py`) to experiment interactively.
 
 ## Installation
 
-1. Make sure Python 3 is installed and available on your `PATH`.
-2. Clone or download this repository.
-3. Open a terminal in the project root directory.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/<your-username>/words2elements.git
+   cd words2elements
+   ```
+
+2. **(Optional) Create and activate a virtual environment**
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\activate  # Windows
+   # source .venv/bin/activate  # Linux/macOS
+   ```
+
+3. **Install dependencies**
+   If you have a `requirements.txt` file:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+   Otherwise, install Tkinter if needed (on some platforms it is included with Python by default).
 
 ## Usage
 
-From the project root, run:
+### Command-line interface
+
+The CLI reads a single word from standard input and prints all valid decompositions as lists of element symbols.
 
 ```bash
-python main.py
+python cli.py
+word2elements
 ```
 
-Then type a word and press Enter. For example:
+Example (interactive):
+
+```bash
+$ python cli.py
+coffee
+[['Co', 'F', 'Fe']]
+```
+
+If no decomposition is possible, the result is an empty list: `[]`.
+
+### GUI
+
+![alt text](image.png)
+
+To start the Tkinter GUI:
+
+```bash
+python gui.py
+```
+
+- Enter a word in the input field.
+- Click the **transform** button.
+- All valid decompositions are shown, one per line, with element symbols separated by spaces (e.g. `Co F Fe`).
+
+If no combinations are found, the GUI shows "No combinations found.".
+
+## Requirements
+
+- Python 3.x (tested with your local version)
+- Standard library only for core logic (`tool.py` and `cli.py`)
+- Tkinter for the GUI (`gui.py`)
+
+Optionally, you can add a `requirements.txt` if you introduce external dependencies in the future.
+
+## Project Structure
 
 ```text
-$ python main.py
-bacon
-[['Ba', 'Co', 'N']]
+words2elements/
+├─ tool.py   # Core solver: finds all element-symbol decompositions of a word
+├─ cli.py    # Minimal CLI: reads a word from stdin, prints decompositions
+├─ gui.py    # Tkinter GUI: interactive interface for entering words and viewing results
+├─ README.md # Project documentation
+├─ LICENSE   # Project license (if present)
+└─ image.png # example of GUI 
 ```
-
-Another example:
-
-```text
-$ python main.py
-neon
-[['Ne', 'O', 'N']]
-```
-
-If a word cannot be fully represented with element symbols, the script prints an empty list:
-
-```text
-$ python main.py
-xyz
-[]
-```
-
-## How it works
-
-- All valid element symbols (1- and 2-letter, in lowercase) are stored in the `elements` list in `main.py`.
-- The input word is converted to lowercase.
-- A depth-first search walks through the word:
-  - At each position it tries to match a 1- or 2-letter element symbol.
-  - For every match, it recurses on the remaining substring.
-  - This produces all possible decompositions of the word into element symbols.
-- Successfully matched symbols are capitalized appropriately (first letter uppercase, second letter lowercase) and returned as lists of symbols, which are then printed.
-
-## Notes
-
-- The script reads a single word from standard input; there is no additional argument parsing.
-- Output is intended for quick experimentation and fun with the periodic table, not for production use.
-
-## Planned improvements
-
-- Add a simple GUI.
-- Better validation of unsuitable input strings (for example, strings with spaces or special characters).
-- Improve the decomposition algorithm (for example, preferring certain decompositions or limiting the number of results for very long words).
