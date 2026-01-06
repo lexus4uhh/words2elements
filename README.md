@@ -1,92 +1,59 @@
 # words2elements
 
-## Description
+Turn words into combinations of chemical element symbols.
 
-words2elements transforms an input word into all possible sequences of chemical element symbols whose concatenation spells that word.
+Given an input word, this tool finds all possible ways to represent it as a sequence of periodic table element symbols, and shows each symbol along with its element name and atomic number. It comes with a simple Tkinter-based GUI.
 
-For example, the word `think` can be represented as `Th I N K` (thorium, iodine, nitrogen, potassium) or `Th In K` (thorium, indium, potassium) if such a decomposition exists using real periodic table symbols.
+## Short Description
 
-The project provides:
-- A small core solver (`tool.py`) that computes all valid decompositions.
-- A minimal command-line interface (`cli.py`).
-- A simple Tkinter-based GUI (`gui.py`) to experiment interactively.
+A small GUI application that decomposes any word into all possible sequences of periodic table element symbols and displays each symbol with its corresponding element name and atomic number.
+
+## Requirements
+
+- Python 3.8+
+- `mendeleev` (listed in `requirements.txt`)
 
 ## Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/<your-username>/words2elements.git
-   cd words2elements
-   ```
+1. (Optional) Create and activate a virtual environment.
+2. Install dependencies:
 
-2. **(Optional) Create and activate a virtual environment**
-   ```bash
-   python -m venv .venv
-   .venv\Scripts\activate  # Windows
-   # source .venv/bin/activate  # Linux/macOS
-   ```
-
-3. **Install dependencies**
-   If you have a `requirements.txt` file:
    ```bash
    pip install -r requirements.txt
    ```
 
-   Otherwise, install Tkinter if needed (on some platforms it is included with Python by default).
-
 ## Usage
 
-### Command-line interface
-
-The CLI reads a single word from standard input and prints all valid decompositions as lists of element symbols.
-
-```bash
-python cli.py
-word2elements
-```
-
-Example (interactive):
-
-```bash
-$ python cli.py
-coffee
-[['Co', 'F', 'Fe']]
-```
-
-If no decomposition is possible, the result is an empty list: `[]`.
-
-### GUI
-
-![alt text](image.png)
-
-To start the Tkinter GUI:
+Run the GUI application from the project root:
 
 ```bash
 python gui.py
 ```
 
-- Enter a word in the input field.
-- Click the **transform** button.
-- All valid decompositions are shown, one per line, with element symbols separated by spaces (e.g. `Co F Fe`).
+Then:
 
-If no combinations are found, the GUI shows "No combinations found.".
+1. Enter a word into the input field.
+2. Click the `transform` button.
+3. View all possible combinations of element symbols representing your word.
 
-## Requirements
-
-- Python 3.x (tested with your local version)
-- Standard library only for core logic (`tool.py` and `cli.py`)
-- Tkinter for the GUI (`gui.py`)
-
-Optionally, you can add a `requirements.txt` if you introduce external dependencies in the future.
+If no valid decomposition exists, the app will display "No combinations found.".
 
 ## Project Structure
 
-```text
-words2elements/
-├─ tool.py   # Core solver: finds all element-symbol decompositions of a word
-├─ cli.py    # Minimal CLI: reads a word from stdin, prints decompositions
-├─ gui.py    # Tkinter GUI: interactive interface for entering words and viewing results
-├─ README.md # Project documentation
-├─ LICENSE   # Project license (if present)
-└─ image.png # example of GUI 
-```
+- `gui.py` – Tkinter-based GUI entry point for the application.
+- `tool.py` – core logic for decomposing words into element symbols and enriching them with element data from `mendeleev`.
+- `requirements.txt` – Python dependencies.
+- `LICENSE` – project license (MIT).
+- `README.md` – project documentation (this file).
+
+## How it works
+
+Core logic is implemented in `tool.py`:
+
+- The `word2symbs(word)` function recursively searches for all ways to cover the word with valid element symbols.
+- The `main(word)` function converts symbol sequences into descriptive strings using `mendeleev`, e.g. `H (Hydrogen, 1)`.
+- The GUI in `gui.py` calls `main(word)` and shows all combinations in a scrollable text area.
+
+## License
+
+This project is licensed under the MIT License. See `LICENSE` for details.

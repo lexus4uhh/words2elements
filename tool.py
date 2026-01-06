@@ -1,3 +1,5 @@
+import mendeleev as md
+
 elements = [
     "h", "he", "li", "be", "b", "c", "n", "o", "f", "ne",
     "na", "mg", "al", "si", "p", "s", "cl", "ar", "k", "ca",
@@ -12,7 +14,7 @@ elements = [
     "md", "no", "lr", "rf", "db", "sg", "bh", "hs", "mt", "ds",
     "rg", "cn", "nh", "fl", "mc", "lv", "ts", "og"]
 
-def main(word: str):
+def word2symbs(word: str):
     word = word.lower()
 
     def dfs(i):
@@ -31,3 +33,14 @@ def main(word: str):
         return results
 
     return dfs(0)
+
+def main(word: str):
+    symbs = word2symbs(word)
+    list_elem = []
+    for j in symbs:
+        elems = []
+        for i in j:
+            element = md.element(i)
+            elems.append(f'{i} ({element.name}, {element.atomic_number})')
+        list_elem.append(elems)
+    return list_elem

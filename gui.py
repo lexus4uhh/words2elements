@@ -18,7 +18,7 @@ def on_solve():
         else:
             result_text.delete(1.0, tk.END)
             for combo in combinations:
-                result_text.insert(tk.END, " ".join(combo) + "\n")
+                result_text.insert(tk.END, " ".join(combo) + "\n\n")
     except Exception as e:
         result_text.delete(1.0, tk.END)
         result_text.insert(tk.END, f"Error: {e}")
